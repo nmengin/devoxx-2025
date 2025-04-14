@@ -1,0 +1,32 @@
+##
+##
+# Declare the routing rules to reach the backend #
+##
+##
+
+---
+kind: HTTPRoute
+apiVersion: gateway.networking.k8s.io/v1
+metadata:
+  name: httproute-whoami
+  namespace: traefik
+spec:
+  parentRefs:
+    # Attach the route to the by-default Traefik Gateway
+    - name: traefik-gateway-http
+      kind: Gateway
+      group: gateway.networking.k8s.io
+  # Define the hostname
+  hostnames:
+    - "whoami.docker.localhost"
+  rules:
+    - backendRefs:
+      - name: whoami
+        port: 80
+        kind: Service
+      filters:
+      - type: RequestHeaderModifier
+        requestHeaderModifier:
+          add:
+            - name: x-devoxx
+              value: Paris-2025

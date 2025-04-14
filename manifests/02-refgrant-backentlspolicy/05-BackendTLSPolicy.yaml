@@ -1,0 +1,19 @@
+kind: BackendTLSPolicy
+apiVersion: gateway.networking.k8s.io/v1alpha3
+metadata:
+  name: whoami-policy
+  namespace: whoami
+spec:
+  # Service to target
+  targetRefs:
+    - group: ""
+      kind: Service
+      name: whoami-tls
+  validation:
+    # SNI the Gateway Controller should use to connect to the backends
+    hostname: whoami-tls.docker.localhost
+    # CA Root to validate the certificates served by the backends
+    caCertificateRefs:
+      - group: ""
+        kind: ConfigMap
+        name: internal-ca

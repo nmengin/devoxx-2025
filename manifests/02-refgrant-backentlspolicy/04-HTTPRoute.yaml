@@ -1,0 +1,34 @@
+##
+##
+# Declare the routing rules to reach the backend #
+##
+##
+---
+kind: HTTPRoute
+apiVersion: gateway.networking.k8s.io/v1
+metadata:
+  name: httproute-whoami-tls
+  namespace: routes
+spec:
+  parentRefs:
+    # Attach the route to the by-default Traefik Gateway
+    - name: traefik-gateway-https
+      kind: Gateway
+      namespace: traefik
+      sectionName: websecure
+      group: gateway.networking.k8s.io
+  # Define the hostname
+  hostnames:
+    - "whoami-tls.docker.localhost"
+  rules:
+    - matches:
+        # Add a matcher on the path
+        - path:
+            type: Exact
+            value: /whoami
+      backendRefs:
+        - name: whoami-tls
+          namespace: whoami
+          port: 8443
+          kind: Service
+          group: ""

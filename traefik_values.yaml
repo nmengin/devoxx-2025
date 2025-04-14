@@ -1,0 +1,25 @@
+image:
+  pullPolicy: Always
+
+# Enable the dashboard and exposes it on the entrypoint web (port :80)
+ingressRoute:
+  dashboard:
+    enabled: true
+    matchRule: "Host(`dashboard.docker.localhost`)"
+    entryPoints: 
+      - "web"
+      
+providers:
+  # Disable Ingress provider... we do not need it anymore ;-)
+  kubernetesIngress:
+    enabled: false
+  # Enable the GatewayAPI provider
+  # A GatewayClass will be created too
+  kubernetesGateway:
+    enabled: true
+    # BackendTLSPolicy is still experimental in Gateway API v1.2 - Standard soon (v1.3)
+    experimentalChannel: true
+
+gateway:
+  # -- When providers.kubernetesGateway.enabled, deploy a default gateway
+  enabled: false
