@@ -17,24 +17,19 @@ helm repo add --force-update traefik https://traefik.github.io/charts
 helm upgrade --install --create-namespace --namespace traefik traefik traefik/traefik -f ./traefik_values.yaml
 ```
 
-# ###############
-# First backend
-# ###############
+## First backend
 
 ```bash
 # Deploy the manifests
 kubectl apply -f manifests/01-first-route
 
 # Reach the backend
-# The header x-devoss has been added
+# The header x-devoxx has been added
 
 curl https://whoami.docker.localhost/
 ```
-# ###################
-# Second backend
-# Cross-Namespace
-# BackendTLSPolicy
-# ###################
+
+## Second backend - Cross-Namespace - BackendTLSPolicy
 
 ```bash
 # Create namespaces
