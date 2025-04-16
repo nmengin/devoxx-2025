@@ -34,8 +34,7 @@ curl https://whoami.docker.localhost/
 ```bash
 # Create namespaces
 kubectl create namespace routes
-kubectl label namespace routes type=tls-routes --o
-verwrite
+kubectl label namespace routes type=tls-routes --overwrite
 
 kubectl create namespace whoami
 
